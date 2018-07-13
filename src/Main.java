@@ -10,11 +10,14 @@ public class Main extends Application {
 
     public static Stage currentStage = null;
 
+    static String fxmlToBeLoaded = "";
+
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("login.fxml"));
-        primaryStage.setTitle("Hello World");
-        primaryStage.setScene(new Scene(root, 300, 275));
+        Parent root = FXMLLoader.load(getClass().getResource(fxmlToBeLoaded));
+        primaryStage.setTitle("OrganizeIT");
+        primaryStage.setScene(new Scene(root, 600, 400));
+        primaryStage.setResizable(false);
         currentStage = primaryStage;
         primaryStage.show();
     }
@@ -32,6 +35,8 @@ public class Main extends Application {
         {
             console.pln("Config File does not exist!");
             console.pln("This will be treated as first time use...");
+            fxmlToBeLoaded = "firstTimeUse.fxml";
+            launch(args);
         }
         //launch(args);
     }

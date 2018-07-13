@@ -1,8 +1,9 @@
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
 
-import java.awt.*;
 import java.net.URL;
 import java.util.ResourceBundle;
 

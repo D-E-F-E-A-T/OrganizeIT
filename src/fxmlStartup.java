@@ -9,10 +9,11 @@ public class fxmlStartup {
         try
         {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(fxmlFileName));
-            Parent root1 = (Parent) fxmlLoader.load();
+            Parent root1 = fxmlLoader.load();
             Stage stage = new Stage();
             stage.setTitle("OrganizeIT");
             stage.setScene(new Scene(root1));
+            stage.setResizable(false);
             Main.currentStage = stage;
             stage.show();
         }

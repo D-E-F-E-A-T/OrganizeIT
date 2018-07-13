@@ -12,41 +12,45 @@ public class crypto
     private static final String ALGORITHM = "AES";
     private static final String TRANSFORMATION = "AES";
 
-    public static boolean encrypt(String key, File inputFile, File outputFile)
+    public static String encrypt(String toBeEncrypted)
     {
-        boolean status = doCrypto(Cipher.ENCRYPT_MODE, key, inputFile, outputFile);
-        return status;
+        return doCrypto(Cipher.ENCRYPT_MODE, toBeEncrypted);
     }
 
-    public static boolean decrypt(String key, File inputFile, File outputFile)
+    public static String decrypt(String toBeDecrypted)
     {
-        boolean status = doCrypto(Cipher.DECRYPT_MODE, key, inputFile, outputFile);
-        return status;
+        return doCrypto(Cipher.DECRYPT_MODE, toBeDecrypted);
     }
 
-    private static boolean doCrypto(int cipherMode, String key, File inputFile, File outputFile) {
+    private static String doCrypto(int cipherMode, String input) {
         try {
+            String key = "I have a crush on Mahi Jain of C";
             Key secretKey = new SecretKeySpec(key.getBytes(), ALGORITHM);
             Cipher cipher = Cipher.getInstance(TRANSFORMATION);
             cipher.init(cipherMode, secretKey);
 
-            FileInputStream inputStream = new FileInputStream(inputFile);
-            byte[] inputBytes = new byte[(int) inputFile.length()];
-            inputStream.read(inputBytes);
+            int inputLength = input.length();
+            while (true)
+            {
+                if(inputLength % 16 != 0)
+                {
+                    inputLength++;
+                    input+=" ";
+                }
+                else
+                {
+                    break;
+                }
+            }
 
-            byte[] outputBytes = cipher.doFinal(inputBytes);
+            byte[] outputBytes = cipher.doFinal(input.getBytes());
 
-            FileOutputStream outputStream = new FileOutputStream(outputFile);
-            outputStream.write(outputBytes);
-
-            inputStream.close();
-            outputStream.close();
-            return true;
+            return outputBytes.toString();
         }
         catch (Exception e)
         {
             e.printStackTrace();
-            return false;
+            return "NULL";
         }
     }
 }

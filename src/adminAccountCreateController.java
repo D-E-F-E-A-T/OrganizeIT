@@ -1,14 +1,9 @@
-import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.DialogPane;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.TimerTask;
 
 public class adminAccountCreateController implements Initializable {
 
@@ -23,12 +18,6 @@ public class adminAccountCreateController implements Initializable {
 
     @FXML
     private PasswordField adminPasswordField;
-
-    @FXML
-    private Label errorLabelDialog;
-
-    @FXML
-    private DialogPane errorDialogPane;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -72,8 +61,23 @@ public class adminAccountCreateController implements Initializable {
 
         if(isValidationError)
         {
-            errorLabelDialog.setText(errorList);
-            errorDialogPane.setVisible(true);
+            console.pln("Validation Error Occurred!");
+            console.pln("Showing alert...");
+            Alert err = new Alert(Alert.AlertType.WARNING, "Please check the following errors and try again :-\n"+errorList,ButtonType.OK);
+            err.setTitle("Uh Oh!");
+            err.show();
+        }
+        else
+        {
+            console.pln("Validation Of Admin details are successful!");
+
+            String actualString = "Debayan Sutradhar";
+            String encryptedString = crypto.encrypt(actualString);
+            String decryptedString = crypto.decrypt(encryptedString);
+
+            console.pln("Actual String : "+actualString);
+            console.pln("Encrypted String : "+encryptedString);
+            console.pln("Decrypted String : "+decryptedString);
         }
     }
 }
