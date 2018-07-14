@@ -4,7 +4,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class fxmlStartup {
-    public fxmlStartup(String fxmlFileName)
+    public fxmlStartup(String fxmlFileName, boolean isResizable)
     {
         try
         {
@@ -13,7 +13,7 @@ public class fxmlStartup {
             Stage stage = new Stage();
             stage.setTitle("OrganizeIT");
             stage.setScene(new Scene(root1));
-            stage.setResizable(false);
+            stage.setResizable(isResizable);
             Main.currentStage = stage;
             stage.show();
         }

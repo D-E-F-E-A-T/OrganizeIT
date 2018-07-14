@@ -1,22 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
+<?import com.jfoenix.controls.JFXButton?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="firstTimeUseController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="firstTimeUseController">
    <children>
-      <Label layoutX="14.0" layoutY="14.0" text="Welcome!">
-         <font>
-            <Font size="42.0" />
-         </font>
-      </Label>
-      <Label fx:id="welcomeMessageSubHeadingLabel" layoutX="14.0" layoutY="73.0" text="Welcome to OrganizeIT!" />
-      <Button fx:id="nextButton" layoutX="259.0" layoutY="346.0" mnemonicParsing="false" onAction="#continueButton" text="Continue" />
-      <TextArea fx:id="creatorMessageTextArea" editable="false" layoutX="14.0" layoutY="111.0" prefHeight="216.0" prefWidth="567.0" text="Hi There!&#10;I am Debayan, the creator of this software!&#10;&#10;OrganizeIT is a employee substitution managment system. It can be used in schools, offices and many other types of workplaces. Please forgive me for the boring layout as I had to make this in a very short period of time.&#10;&#10;This software is completely free to use and has been completely open-sourced!&#10;You can Fork/Clone the Code at &#10;https://github.com/ladiesman6969" wrapText="true" />
-      <Label fx:id="secondMessage0Label" layoutX="56.0" layoutY="152.0" prefHeight="67.0" prefWidth="491.0" text="Since this is the first time you are using this software, you need to create an admin account and employees." visible="false" wrapText="true" />
-      <Label fx:id="secondMessage1Label" layoutX="143.0" layoutY="219.0" text="Click on Continue to go to the Registration Page" visible="false" />
+      <AnchorPane prefHeight="56.0" prefWidth="600.0" style="-fx-background-color: #1e88e5;">
+         <children>
+            <Label layoutX="14.0" layoutY="14.0" text="Welcome!" textFill="WHITE">
+               <font>
+                  <Font size="26.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      <Label alignment="TOP_CENTER" layoutY="72.0" prefHeight="16.0" prefWidth="600.0" text="Welcome To OrganizeIT!" />
+      <JFXButton buttonType="RAISED" layoutX="254.0" layoutY="345.0" onAction="#continueButton" ripplerFill="#3954a8" text="Continue" />
+      <Label fx:id="secondMsgLabel" alignment="TOP_CENTER" layoutX="18.0" layoutY="153.0" prefHeight="76.0" prefWidth="554.0" text="Since this is the first time you are using OrganizeIT,&#10;you need to create an admin account to proceed. It will just take around five minutes." visible="false" wrapText="true" />
+      <Label fx:id="firstMsgLabel" layoutX="13.0" layoutY="109.0" prefHeight="224.0" prefWidth="571.0" text="Hi There!&#10;I am Debayan, the creator of this software!&#10;&#10;OrganizeIT is a employee substitution managment system. It can be used in schools, offices and many other types of workplaces. Please forgive me for the boring layout as I had to make this in a very short period of time.&#10;&#10;This software is completely free to use and has been completely open-sourced!&#10;You can Fork/Clone the Code at &#10;https://github.com/ladiesman6969" wrapText="true" />
    </children>
 </AnchorPane>

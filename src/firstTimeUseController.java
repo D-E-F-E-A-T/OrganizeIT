@@ -1,3 +1,5 @@
+import com.jfoenix.controls.JFXTextArea;
+import com.jfoenix.controls.JFXTextField;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -12,16 +14,10 @@ public class firstTimeUseController implements Initializable {
     int currentStatus = 0;
 
     @FXML
-    private TextArea creatorMessageTextArea;
+    private Label firstMsgLabel;
 
     @FXML
-    private Label welcomeMessageSubHeadingLabel;
-
-    @FXML
-    private Label secondMessage0Label;
-
-    @FXML
-    private Label secondMessage1Label;
+    private Label secondMsgLabel;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -33,16 +29,13 @@ public class firstTimeUseController implements Initializable {
         switch (currentStatus)
         {
             case 0:
-                creatorMessageTextArea.setVisible(false);
-                welcomeMessageSubHeadingLabel.setVisible(false);
-
-                secondMessage0Label.setVisible(true);
-                secondMessage1Label.setVisible(true);
+                firstMsgLabel.setVisible(false);
+                secondMsgLabel.setVisible(true);
                 break;
 
             case 1:
                 Main.currentStage.close();
-                new fxmlStartup("adminAccountCreate.fxml");
+                new fxmlStartup("adminAccountCreate.fxml", false);
                 break;
         }
 

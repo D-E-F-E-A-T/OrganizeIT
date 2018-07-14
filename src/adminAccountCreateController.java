@@ -1,23 +1,30 @@
+import com.jfoenix.controls.JFXPasswordField;
+import com.jfoenix.controls.JFXTextField;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileWriter;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class adminAccountCreateController implements Initializable {
 
     @FXML
-    private TextField adminFirstNameField;
+    private JFXTextField adminFirstNameField;
 
     @FXML
-    private TextField adminSecondNameField;
+    private JFXTextField adminSecondNameField;
 
     @FXML
-    private TextField adminUsernameField;
+    private JFXTextField adminUsernameField;
 
     @FXML
-    private PasswordField adminPasswordField;
+    private JFXPasswordField adminPasswordField;
+
+    FileWriter fileWriter;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -71,13 +78,21 @@ public class adminAccountCreateController implements Initializable {
         {
             console.pln("Validation Of Admin details are successful!");
 
-            String actualString = "Debayan Sutradhar";
-            String encryptedString = crypto.encrypt(actualString);
-            String decryptedString = crypto.decrypt(encryptedString);
+            try
+            {
+                //File configFile = new File("data/config");
+                //String toBeWritten = adminFirstNameEntered+"\n"+adminSecondNameEntered+"\n"+adminUsernameEntered+"\n"+adminPasswordEntered+"\n";
+                //filer.write(toBeWritten,configFile);
 
-            console.pln("Actual String : "+actualString);
-            console.pln("Encrypted String : "+encryptedString);
-            console.pln("Decrypted String : "+decryptedString);
+                Main.currentStage.close();
+                new fxmlStartup("employeesRegister.fxml", true);
+
+
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
         }
     }
 }

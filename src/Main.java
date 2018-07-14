@@ -1,4 +1,5 @@
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -17,7 +18,7 @@ public class Main extends Application {
         Parent root = FXMLLoader.load(getClass().getResource(fxmlToBeLoaded));
         primaryStage.setTitle("OrganizeIT");
         primaryStage.setScene(new Scene(root, 600, 400));
-        primaryStage.setResizable(false);
+        //primaryStage.setResizable(false);
         currentStage = primaryStage;
         primaryStage.show();
     }
@@ -35,8 +36,13 @@ public class Main extends Application {
         {
             console.pln("Config File does not exist!");
             console.pln("This will be treated as first time use...");
-            fxmlToBeLoaded = "firstTimeUse.fxml";
-            launch(args);
+            fxmlToBeLoaded = "employeesRegister.fxml";
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    new fxmlStartup(fxmlToBeLoaded, true);
+                }
+            });
         }
         //launch(args);
     }
