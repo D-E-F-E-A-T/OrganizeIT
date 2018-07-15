@@ -80,9 +80,9 @@ public class adminAccountCreateController implements Initializable {
 
             try
             {
-                //File configFile = new File("data/config");
-                //String toBeWritten = adminFirstNameEntered+"\n"+adminSecondNameEntered+"\n"+adminUsernameEntered+"\n"+adminPasswordEntered+"\n";
-                //filer.write(toBeWritten,configFile);
+                File configFile = new File("data/config");
+                String toBeWritten = adminFirstNameEntered+Main.seperatorCharacter+adminSecondNameEntered+Main.seperatorCharacter+adminUsernameEntered+Main.seperatorCharacter+adminPasswordEntered;
+                filer.write(toBeWritten,configFile);
 
                 Main.currentStage.close();
                 new fxmlStartup("employeesRegister.fxml", true);

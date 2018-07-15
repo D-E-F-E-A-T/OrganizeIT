@@ -19,6 +19,7 @@ import javafx.scene.paint.Color;
 
 import java.io.File;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -73,6 +74,8 @@ public class employeesRegisterController implements Initializable
 
     int noOfEmployeesToBeAdded = 0;
     int totalNoOfEmployeesAfterAmendment = 0;
+
+    ArrayList employeesToBeAdded = new ArrayList();
     public void continueButtonClicked()
     {
         if(currentStatus == 0)
@@ -81,17 +84,29 @@ public class employeesRegisterController implements Initializable
                 @Override
                 public void run() {
                     String numEmployeesToBeAddedStr = numOfEmployeesField.getText();
-                    boolean isInputError = false;
+
                     try
                     {
                         noOfEmployeesToBeAdded = Integer.parseInt(numEmployeesToBeAddedStr);
+                        if(noOfEmployeesToBeAdded == 0)
+                        {
+                            Platform.runLater(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Alert numParseError = new Alert(Alert.AlertType.ERROR, "Please enter a valid number of candidates\nfrom 1 - 500 in numbers.",ButtonType.OK);
+                                    numParseError.show();
+                                }
+                            });
+                            currentStatus = -1;
+                            return;
+                        }
                     }
                     catch (Exception e)
                     {
                         Platform.runLater(new Runnable() {
                             @Override
                             public void run() {
-                                Alert numParseError = new Alert(Alert.AlertType.ERROR, "Please enter a valid number of candidates\nfrom 0 - 500 in numbers.",ButtonType.OK);
+                                Alert numParseError = new Alert(Alert.AlertType.ERROR, "Please enter a valid number of candidates\nfrom 1 - 500 in numbers.",ButtonType.OK);
                                 numParseError.show();
                             }
                         });
@@ -185,6 +200,7 @@ public class employeesRegisterController implements Initializable
 
                     ObservableList<Node> childrenList = mainVBox.getChildren();
                     boolean isValidationError = false;
+                    employeesToBeAdded.clear();
                     for(int index = 0; index<childrenList.size(); index++)
                     {
                         HBox eachHBox = (HBox) childrenList.get(index);
@@ -210,9 +226,8 @@ public class employeesRegisterController implements Initializable
 
                         if(!isValidationError)
                         {
-                            File eachEmployeeFile = new File("data/employees/" + eachID);
-                            String toBeWritten = eachName + "\n" + eachID + "\n";
-                            filer.write(toBeWritten, eachEmployeeFile);
+                            employeesToBeAdded.add(eachID);
+                            employeesToBeAdded.add(eachName);
                         }
                     }
 
@@ -241,6 +256,16 @@ public class employeesRegisterController implements Initializable
 
                     else
                     {
+                        for(int xcc = 0;xcc<employeesToBeAdded.size();xcc+=2)
+                        {
+                            String eachID = employeesToBeAdded.get(xcc).toString();
+                            String eachName = employeesToBeAdded.get((xcc+1)).toString();
+
+                            File eachEmployeeFile = new File("data/employees/" + eachID);
+                            String toBeWritten = eachName + Main.seperatorCharacter + eachID + Main.seperatorCharacter;
+                            filer.write(toBeWritten, eachEmployeeFile);
+                        }
+
                         File employeesIndexFile = new File("data/employeesIndex");
                         filer.write(totalNoOfEmployeesAfterAmendment+"", employeesIndexFile);
 

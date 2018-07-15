@@ -12,6 +12,7 @@ public class Main extends Application {
     public static Stage currentStage = null;
 
     static String fxmlToBeLoaded = "";
+    static String seperatorCharacter = "�";
 
     @Override
     public void start(Stage primaryStage) throws Exception{
