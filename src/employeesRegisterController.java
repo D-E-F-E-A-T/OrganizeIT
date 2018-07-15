@@ -2,6 +2,7 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXProgressBar;
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
+import com.sun.deploy.services.PlatformType;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
@@ -10,11 +11,11 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
+import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 
 import java.io.File;
 import java.net.URL;
@@ -24,12 +25,16 @@ import java.util.TimerTask;
 
 public class employeesRegisterController implements Initializable
 {
+    String errorList = "";
 
     @FXML
     private Label firstMsgLabel;
 
     @FXML
     private VBox mainVBox;
+
+    @FXML
+    private JFXButton continueButton;
 
     @FXML
     private ScrollPane mainScrollPane;
@@ -76,6 +81,24 @@ public class employeesRegisterController implements Initializable
                 @Override
                 public void run() {
                     String numEmployeesToBeAddedStr = numOfEmployeesField.getText();
+                    boolean isInputError = false;
+                    try
+                    {
+                        noOfEmployeesToBeAdded = Integer.parseInt(numEmployeesToBeAddedStr);
+                    }
+                    catch (Exception e)
+                    {
+                        Platform.runLater(new Runnable() {
+                            @Override
+                            public void run() {
+                                Alert numParseError = new Alert(Alert.AlertType.ERROR, "Please enter a valid number of candidates\nfrom 0 - 500 in numbers.",ButtonType.OK);
+                                numParseError.show();
+                            }
+                        });
+                        currentStatus = -1;
+                        return;
+                    }
+
                     try
                     {
                         File employeesIndex = new File("data/employeesIndex");
@@ -87,7 +110,6 @@ public class employeesRegisterController implements Initializable
                             noOfEmployeesAlreadyRegistered = Integer.parseInt(str);
                         }
                         int thisEmployeeIndex = noOfEmployeesAlreadyRegistered + 1;
-                        noOfEmployeesToBeAdded = Integer.parseInt(numEmployeesToBeAddedStr);
                         totalNoOfEmployeesAfterAmendment = noOfEmployeesAlreadyRegistered+noOfEmployeesToBeAdded;
                         firstMsgLabel.setVisible(false);
                         numOfEmployeesField.setVisible(false);
@@ -105,7 +127,6 @@ public class employeesRegisterController implements Initializable
                             eachEmployeeName.setPadding(new Insets(10,20,10,10));
                             eachEmployeeName.setPrefWidth(20);
                             eachEmployeeName.setPrefHeight(24.0);
-                            eachEmployeeName.setText("FirstName SecondName");
                             eachEmployeeName.setId("employeeName"+index);
                             eachEmployeeName.setPrefWidth(538.0);
 
@@ -148,6 +169,7 @@ public class employeesRegisterController implements Initializable
             headingHBox.setVisible(false);
             mainScrollPane.setVisible(false);
             resetButton.setVisible(false);
+            continueButton.setVisible(false);
 
             TimerTask registerEmployeesTask = new TimerTask() {
                 @Override
@@ -162,38 +184,81 @@ public class employeesRegisterController implements Initializable
                     });
 
                     ObservableList<Node> childrenList = mainVBox.getChildren();
-                    int totalDone = 0;
+                    boolean isValidationError = false;
                     for(int index = 0; index<childrenList.size(); index++)
                     {
                         HBox eachHBox = (HBox) childrenList.get(index);
                         ObservableList<Node> eachHBoxChildren = eachHBox.getChildren();
                         JFXTextField eachNameField = (JFXTextField) eachHBoxChildren.get(1);
                         JFXTextField eachIDField = (JFXTextField) eachHBoxChildren.get(2);
-
                         String eachName = eachNameField.getText();
                         String eachID = eachIDField.getText();
 
-                        File eachEmployeeFile = new File("data/employees/"+eachID);
-                        String toBeWritten = eachName+"\n"+eachID+"\n";
-                        filer.write(toBeWritten,eachEmployeeFile);
-                        totalDone++;
+                        if(eachName.length() < 3)
+                        {
+                            console.pln(eachName.length()+"");
+                            errorList += "Please enter a valid full name\nfor Employee : "+(index+1)+"\nEmployee ID : "+eachID+"\n";
+                            isValidationError = true;
+                            eachNameField.setUnFocusColor(Color.RED);
+                            eachIDField.setUnFocusColor(Color.RED);
+                        }
+                        else
+                        {
+                            eachNameField.setUnFocusColor(Color.GREEN);
+                            eachIDField.setUnFocusColor(Color.GREEN);
+                        }
+
+                        if(!isValidationError)
+                        {
+                            File eachEmployeeFile = new File("data/employees/" + eachID);
+                            String toBeWritten = eachName + "\n" + eachID + "\n";
+                            filer.write(toBeWritten, eachEmployeeFile);
+                        }
+                    }
+
+                    if(isValidationError)
+                    {
+                        Platform.runLater(new Runnable() {
+                            @Override
+                            public void run() {
+                                headingHBox.setVisible(true);
+                                mainScrollPane.setVisible(true);
+                                resetButton.setVisible(true);
+
+                                loadingProgressBar.setVisible(false);
+                                loadingLabel.setVisible(false);
+                                Alert invalidValAlert = new Alert(Alert.AlertType.ERROR,"Please check the following errors and try again.\n"+errorList,ButtonType.OK);
+                                invalidValAlert.setResizable(true);
+                                invalidValAlert.show();
+                                currentStatus = 1;
+                                errorList = "";
+                                continueButton.setVisible(true);
+                            }
+                        });
+
+
+                    }
+
+                    else
+                    {
+                        File employeesIndexFile = new File("data/employeesIndex");
+                        filer.write(totalNoOfEmployeesAfterAmendment+"", employeesIndexFile);
+
+                        Platform.runLater(new Runnable() {
+                            @Override
+                            public void run() {
+                                congratsLabel2.setText(noOfEmployeesToBeAdded+" employees have been successfully added to the system!");
+                                loadingProgressBar.setVisible(false);
+                                loadingLabel.setVisible(false);
+                                congratulationsLabel.setVisible(true);
+                                congratsLabel2.setVisible(true);
+                                congratsLabel3.setVisible(true);
+                                continueButton.setVisible(true);
+                            }
+                        });
                     }
 
 
-                    File employeesIndexFile = new File("data/employeesIndex");
-                    filer.write(totalNoOfEmployeesAfterAmendment+"", employeesIndexFile);
-
-                    Platform.runLater(new Runnable() {
-                        @Override
-                        public void run() {
-                            congratsLabel2.setText(noOfEmployeesToBeAdded+" employees have been successfully added to the system!");
-                            loadingProgressBar.setVisible(false);
-                            loadingLabel.setVisible(false);
-                            congratulationsLabel.setVisible(true);
-                            congratsLabel2.setVisible(true);
-                            congratsLabel3.setVisible(true);
-                        }
-                    });
                 }
             };
             new Timer().schedule(registerEmployeesTask,50);
