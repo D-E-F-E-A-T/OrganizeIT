@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="310.0" prefWidth="408.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="310.0" prefWidth="408.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="loginController">
    <children>
       <Label layoutX="106.0" layoutY="28.0" text="OrganizeIT">
          <font>
@@ -17,9 +17,10 @@
       <Label layoutX="96.0" layoutY="68.0" text="Enter your credentials to login" />
       <Label layoutX="37.0" layoutY="118.0" text="Username : " />
       <Label layoutX="37.0" layoutY="155.0" text="Password : " />
-      <JFXButton fx:id="loginButton" buttonType="RAISED" layoutX="177.0" layoutY="211.0" ripplerFill="BLACK" text="Login" />
-      <JFXTextField fx:id="usernameLoginField" layoutX="154.0" layoutY="113.0" prefHeight="26.0" prefWidth="171.0" />
-      <JFXPasswordField fx:id="passwordLoginField" layoutX="154.0" layoutY="150.0" prefHeight="26.0" prefWidth="171.0" />
+      <JFXButton fx:id="loginButton" buttonType="RAISED" disable="true" layoutX="177.0" layoutY="211.0" onAction="#checkUserProvidedLoginValues" ripplerFill="BLACK" text="Login" />
+      <JFXTextField fx:id="usernameLoginField" layoutX="154.0" layoutY="113.0" onKeyPressed="#validateValues" onKeyReleased="#validateValues" prefHeight="26.0" prefWidth="171.0" />
+      <JFXPasswordField fx:id="passwordLoginField" layoutX="154.0" layoutY="150.0" onKeyPressed="#validateValues" onKeyReleased="#validateValues" prefHeight="26.0" prefWidth="171.0" />
       <Label fx:id="versionLabel" layoutX="320.0" layoutY="291.0" text="Version X.XX" />
+      <Label fx:id="loginMsg" alignment="CENTER" layoutX="105.0" layoutY="256.0" prefHeight="16.0" prefWidth="198.0" text="Login Successful!" textFill="#29ff00" visible="false" />
    </children>
 </AnchorPane>

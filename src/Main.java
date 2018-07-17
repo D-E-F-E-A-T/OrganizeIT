@@ -13,6 +13,7 @@ public class Main extends Application {
 
     static String fxmlToBeLoaded = "";
     static String seperatorCharacter = "�";
+    static String version = "1.0";
 
     @Override
     public void start(Stage primaryStage) throws Exception{
@@ -32,16 +33,22 @@ public class Main extends Application {
         if(configFile.exists())
         {
             console.pln("File Exists!");
+            console.pln("Starting...");
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    fxmlStartup.start("login.fxml",false);
+                }
+            });
         }
         else
         {
             console.pln("Config File does not exist!");
             console.pln("This will be treated as first time use...");
-            fxmlToBeLoaded = "employeesRegister.fxml";
             Platform.runLater(new Runnable() {
                 @Override
                 public void run() {
-                    new fxmlStartup(fxmlToBeLoaded, true);
+                    fxmlStartup.start("firstTimeUse.fxml", false);
                 }
             });
         }

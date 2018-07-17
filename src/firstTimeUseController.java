@@ -35,7 +35,7 @@ public class firstTimeUseController implements Initializable {
 
             case 1:
                 Main.currentStage.close();
-                new fxmlStartup("adminAccountCreate.fxml", false);
+                fxmlStartup.start("adminAccountCreate.fxml", false);
                 break;
         }
 

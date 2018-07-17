@@ -290,7 +290,8 @@ public class employeesRegisterController implements Initializable
         }
         else if(currentStatus == 3)
         {
-
+            Main.currentStage.close();
+            fxmlStartup.start("timeSlotRegister.fxml",true);
         }
 
         currentStatus++;

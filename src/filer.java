@@ -34,7 +34,7 @@ public class filer
         {
             console.pln("Starting new FileReader ...");
             fileReader = new FileReader(fileLocation);
-            console.pln("Reading ...");
+            console.pln("Reading "+fileLocation+"...");
             String toBeReturned = "";
             while(true)
             {

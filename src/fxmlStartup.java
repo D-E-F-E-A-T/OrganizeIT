@@ -4,11 +4,11 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class fxmlStartup {
-    public fxmlStartup(String fxmlFileName, boolean isResizable)
+    public static void start(String fxmlFileName, boolean isResizable)
     {
         try
         {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(fxmlFileName));
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource(fxmlFileName));
             Parent root1 = fxmlLoader.load();
             Stage stage = new Stage();
             stage.setTitle("OrganizeIT");

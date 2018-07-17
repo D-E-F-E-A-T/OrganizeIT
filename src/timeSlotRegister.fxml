@@ -35,9 +35,9 @@
       <JFXCheckBox fx:id="satCheckBox" layoutX="294.0" layoutY="411.0" selected="true" text="Saturday" visible="false" />
       <JFXCheckBox fx:id="wedCheckBox" layoutX="294.0" layoutY="330.0" selected="true" text="Wednesday" visible="false" />
       <JFXCheckBox fx:id="sunCheckBox" layoutX="294.0" layoutY="440.0" text="Sunday" visible="false" />
-      <ScrollPane fx:id="timeSlotsRegisterScrollPane" layoutX="202.0" layoutY="99.0" prefHeight="382.0" prefWidth="500.0" AnchorPane.leftAnchor="202.0" AnchorPane.rightAnchor="129.0">
+      <ScrollPane fx:id="timeSlotsRegisterScrollPane" layoutX="202.0" layoutY="99.0" prefHeight="382.0" prefWidth="500.0" visible="false" AnchorPane.leftAnchor="202.0" AnchorPane.rightAnchor="129.0">
          <content>
-            <VBox fx:id="timeSlotsRegisterVBox" prefWidth="500.0" />
+            <VBox fx:id="timeSlotsRegisterVBox" />
          </content>
       </ScrollPane>
       <Label fx:id="subHeadingLabel" layoutX="14.0" layoutY="65.0" text="SubHeading">
@@ -45,5 +45,10 @@
             <Font size="22.0" />
          </font>
       </Label>
+      <ScrollPane fx:id="timeSlots1ScrollPane" layoutX="98.0" layoutY="102.0" prefHeight="376.0" prefWidth="633.0">
+         <content>
+            <VBox fx:id="timeSlotConfigureVBox" />
+         </content>
+      </ScrollPane>
    </children>
 </AnchorPane>

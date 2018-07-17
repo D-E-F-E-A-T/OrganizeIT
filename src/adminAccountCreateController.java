@@ -85,7 +85,7 @@ public class adminAccountCreateController implements Initializable {
                 filer.write(toBeWritten,configFile);
 
                 Main.currentStage.close();
-                new fxmlStartup("employeesRegister.fxml", true);
+                fxmlStartup.start("employeesRegister.fxml", true);
 
 
             }
